@@ -1010,7 +1010,7 @@ int coinChangePermutation(int tar, vi &arr, vi &dp)
         dp[tar] = 1;
     if (dp[tar] != 0)
         dp[tar];
-    int count;
+    int count = 0;
     for (auto ele : arr)
         if (tar - ele >= 0)
             count += coinChangePermutation(tar - ele, arr, dp);
