@@ -1705,7 +1705,7 @@ int burstBallon(vector<int> &arr, int si, int ei, vector<vector<int>> &dp)
     if (dp[si][ei] != 0)
         return dp[si][ei];
 
-    int lVal = si == 0 ? 1 : arr[si - 1];
+    int lVal = (si == 0) ? 1 : arr[si - 1];
     int rVal = (ei == arr.size() - 1) ? 1 : arr[ei + 1];
 
     int ans = 0;
