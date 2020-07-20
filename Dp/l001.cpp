@@ -1945,13 +1945,13 @@ long numDecodingsII_Fast(string &str, int idx, vector<long> &dp)
 // 4. 096
 // 5. 095
 
-int numDecodings(string str)
-{
-    vector<long> dp(str.length() + 1, 0);
-    // return (int)numDecodingsII_recu(str, 0, dp);
-    // return (int)numDecodingsII_DP(str, 0, dp);
-    return (int)numDecodingsII_Fast(str, 0, dp);
-}
+// int numDecodings(string str)
+// {
+//     vector<long> dp(str.length() + 1, 0);
+//     // return (int)numDecodingsII_recu(str, 0, dp);
+//     // return (int)numDecodingsII_DP(str, 0, dp);
+//     return (int)numDecodingsII_Fast(str, 0, dp);
+// }
 
 int numDecodings(string s)
 {
@@ -2024,9 +2024,9 @@ void solve()
     //set2();
     // stringSubstringSet();
     // cutType();
-    // targetType();
+    targetType();
     // MCM();
-    optimalBinarySearchTree();
+    // optimalBinarySearchTree();
 }
 
 int main()
