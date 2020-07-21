@@ -984,6 +984,29 @@ int maxDotProduct(vector<int> &nums1, vector<int> &nums2)
     return dp[0][0];
 }
 
+// Leetcode 72 convering str1 -> str2;
+int editDistance(string &str1, string &str2, int n, int m, vector<vector<int>> &dp)
+{
+    if (n == 0 || m == 0)
+        return dp[n][m] = (n == 0 ? m : n);
+    if (dp[n][m] != 0)
+        return dp[n][m];
+    if (str1[n - 1] == str2[m - 1])
+        return dp[n][m] = editDistance(str1, str2, n - 1, m - 1, dp);
+    int insert_ = editDistance(str1, str2, n, m - 1, dp) + 1;
+    int replace_ = editDistance(str1, str2, n - 1, m - 1, dp) + 1;
+    int delete_ = editDistance(str1, str2, n - 1, m, dp) + 1;
+    return dp[n][m] = min({insert_, replace_, delete_});
+}
+
+int minDistance(string word1, string word2)
+{
+    int n = word1.length();
+    int m = word2.length();
+    vector<vector<int>> dp(n + 1, vector<int>(m + 1, 0));
+    return editDistance(word1, word2, n, m, dp);
+}
+
 void stringSubstringSet()
 {
     // string str = "geeksforgeeks";
