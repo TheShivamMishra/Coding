@@ -58,9 +58,37 @@ int numTrees(int n)
     return dp[n];
 }
 
+int findLongestRepeatingSubSeq(string &X, int m, int n, vvi &dp)
+{
+
+    if (dp[m][n] != -1)
+        return dp[m][n];
+
+    // return if we have reached the end of either string
+    if (m == 0 || n == 0)
+        return dp[m][n] = 0;
+
+    // if characters at index m and n matches
+    // and index is different
+    if (X[m - 1] == X[n - 1] && m != n)
+        return dp[m][n] = findLongestRepeatingSubSeq(X,
+                                                     m - 1, n - 1, dp) +
+                          1;
+
+    // else if characters at index m and n don't match
+    return dp[m][n] = max(findLongestRepeatingSubSeq(X, m, n - 1, dp),
+                          findLongestRepeatingSubSeq(X, m - 1, n, dp));
+}
+
 int solve()
 {
-    return 0;
+    int n;
+    cin >> n;
+    string str;
+    cin >> str;
+    string rstr = string(str.rbegin(), str.rend());
+    vvi dp(n + 1, vi(n + 1, -1));
+    return findLongestRepeatingSubSeq(str, n, n, dp);
 }
 
 int main()
