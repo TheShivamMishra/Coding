@@ -1777,30 +1777,31 @@ void MCM()
 
     display2D(dp);
 }
-int minCut(String str, int si, int ei, boolean[][] isPalin, int[][] dp)
-{
-
-    if (isPalin[si][ei])
-        return dp[si][ei] = 0;
-
-    if (dp[si][ei] != -1)
-        return dp[si][ei];
-
-    int myans = (int)1e9;
-    for (int cut = si + 1; cut <= ei; cut++)
-    {
-        int leftCuts = minCut(str, si, cut - 1, isPalin, dp);
-        int rightCuts = minCut(str, cut, ei, isPalin, dp);
-
-        int myCost = leftCuts + 1 + rightCuts;
-        if (myCost < myans)
-            myans = myCost;
-    }
-    return dp[si][ei] = myans;
-}
 
 // leetcode 132 =============================
-// soluiton is in java to pass 
+// soluiton is in java to pass
+// int minCut(String str, int si, int ei, boolean[][] isPalin, int[][] dp)
+// {
+
+//     if (isPalin[si][ei])
+//         return dp[si][ei] = 0;
+
+//     if (dp[si][ei] != -1)
+//         return dp[si][ei];
+
+//     int myans = (int)1e9;
+//     for (int cut = si + 1; cut <= ei; cut++)
+//     {
+//         int leftCuts = minCut(str, si, cut - 1, isPalin, dp);
+//         int rightCuts = minCut(str, cut, ei, isPalin, dp);
+
+//         int myCost = leftCuts + 1 + rightCuts;
+//         if (myCost < myans)
+//             myans = myCost;
+//     }
+//     return dp[si][ei] = myans;
+// }
+
 // public  int minCut(String str)
 // {
 //     int n = str.length();
