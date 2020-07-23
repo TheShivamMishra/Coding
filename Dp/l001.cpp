@@ -1777,6 +1777,83 @@ void MCM()
 
     display2D(dp);
 }
+int minCut(String str, int si, int ei, boolean[][] isPalin, int[][] dp)
+{
+
+    if (isPalin[si][ei])
+        return dp[si][ei] = 0;
+
+    if (dp[si][ei] != -1)
+        return dp[si][ei];
+
+    int myans = (int)1e9;
+    for (int cut = si + 1; cut <= ei; cut++)
+    {
+        int leftCuts = minCut(str, si, cut - 1, isPalin, dp);
+        int rightCuts = minCut(str, cut, ei, isPalin, dp);
+
+        int myCost = leftCuts + 1 + rightCuts;
+        if (myCost < myans)
+            myans = myCost;
+    }
+    return dp[si][ei] = myans;
+}
+
+// leetcode 132 =============================
+// soluiton is in java to pass 
+// public  int minCut(String str)
+// {
+//     int n = str.length();
+//     boolean[][] isPalin = new boolean[n][n];
+
+//     for (int gap = 0; gap < n; gap++)
+//     {
+//         for (int i = 0, j = gap; j < n; i++, j++)
+//         {
+//             if (gap == 0)
+//             {
+//                 isPalin[i][j] = true;
+//                 continue;
+//             }
+//             else if (gap == 1 && str.charAt(i) == str.charAt(j))
+//                 isPalin[i][j] = true;
+//             else if (str.charAt(i) == str.charAt(j))
+//                 isPalin[i][j] = isPalin[i + 1][j - 1];
+//         }
+//     }
+
+//     if (isPalin[0][n - 1])
+//         return 0;
+
+//     int[][] dp = new int[n][n];
+//     for (int[] ar : dp)
+//         Arrays.fill(ar, 0);
+//     // return minCut(str, 0, n - 1, isPalin, dp);
+//     for (int gap = 1; gap < n; gap++)
+//     {
+//         for (int si = 0, ei = gap; ei < n; si++, ei++)
+//         {
+
+//             if (isPalin[si][ei])
+//                 dp[si][ei] = 0;
+//             else
+//             {
+//                 int myans = (int)1e9;
+//                 for (int cut = si + 1; cut <= ei; cut++)
+//                 {
+//                     int leftCuts = dp[si][cut - 1]; //minCut(str, si, cut - 1, isPalin, dp);
+//                     int rightCuts = dp[cut][ei];    //minCut(str, cut, ei, isPalin, dp);
+
+//                     int myCost = leftCuts + 1 + rightCuts;
+//                     if (myCost < myans)
+//                         myans = myCost;
+//                 }
+//                 dp[si][ei] = myans;
+//             }
+//         }
+//     }
+//     return dp[0][n - 1];
+// }
 
 //==============================================================================================================
 
