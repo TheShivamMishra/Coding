@@ -91,7 +91,7 @@ void removeVtx(int vtx)
 }
 
 // questions =============================================================
-
+// Dfs structrue for grpah
 bool hasPath(int src, int dest, vector<bool> &vis)
 {
     if (src == dest)

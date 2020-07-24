@@ -1047,7 +1047,7 @@ int coinChangePermutation_DP(int Tar, vi &arr, vi &dp)
     {
         if (tar == 0)
         {
-            dp[tar] = 0;
+            dp[tar] = 1;
             continue;
         }
         int count;
