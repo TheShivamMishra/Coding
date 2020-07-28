@@ -228,7 +228,7 @@ void BFS(int src, vector<bool> &vis)
         que.pop();
 
         if (vis[rvtx.first])
-        { // the worrk of this loop is to detect cycle
+        { // the work of this loop is to detect cycle
             cout << "Cycle: " << rvtx.second << endl;
             continue;
         }
@@ -298,7 +298,7 @@ void BFS_02(int src, vector<bool> &vis)
     cout << "total cycle: " << cycle << endl;
 }
 
-//bfs in this we mark true each edge inside the for loop but we can't find the loop.
+//bfs in this we mark true each edge inside the for loop but we can't find the cycle in the graph.
 void BFS_03(int src, vector<bool> &vis)
 {
     queue<int> que;
