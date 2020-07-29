@@ -103,9 +103,10 @@ public class l002_directedGraph {
 
     }
 
-    // topological sort using dfs marking the array 1 for current path as visiting to find cycle.
+    // topological sort using dfs marking the array 1 for current path as visiting
+    // to find cycle.
     public static boolean topologicalSort_(int src, int[] vis, ArrayList<Integer> ans) {
-        if (vis[src] == 1)//visited vertex in my path.
+        if (vis[src] == 1)// visited vertex in my path.
             return true;
         if (vis[src] == 2) // already viseited vertex but not by my path.
             return false;
@@ -136,8 +137,7 @@ public class l002_directedGraph {
             System.out.println("Cycle :" + ans);
     }
 
-
-    //Scc of a graph using kosa raju algo.======================
+    // Scc of a graph using kosa raju algo.======================
     public static void dfs_scc(int src, ArrayList<Integer>[] ngraph, boolena[] vis, ArrayList<Integer> ans) {
         vis[src] = true;
         for (int ele : ngraph[src]) {
@@ -146,8 +146,7 @@ public class l002_directedGraph {
         }
     }
 
-    public static void KosaRajuAlgo()
-    {
+    public static void KosaRajuAlgo() {
         boolean vis[] = new boolean[N];
         ArrayList<Integer> ans = new ArrayList<>(); // getting topo Order in which we have to travel;
         for (int i = 0; i < N; i++)
@@ -159,17 +158,16 @@ public class l002_directedGraph {
             ngraph[i] = new ArrayList<>();
 
         for (int i = 0; i < N; i++) { // inversion of old graph and storing it into ngraph;
-            for (int ele : graph[sr]) {
-                ngraph[ele].add(src);
+            for (int ele : graph[i]) {
+                ngraph[ele].add(i);
             }
         }
 
         vis = new boolean[N];
         count = 0;
-        for(int i=ans.size()-1;i>=0;i--)   // running again dfs but now on topo Order obtianed;
+        for (int i = ans.size() - 1; i >= 0; i--) // running again dfs but now on topo Order obtianed;
         {
-            if(!vis[ans.get(i)])
-            {
+            if (!vis[ans.get(i)]) {
                 ArrayList<Integer> ans_ = new ArrayList<>();
                 dfs_scc(ans.get(i), ngraph, vis, ans_);
                 System.out.println(ans_);

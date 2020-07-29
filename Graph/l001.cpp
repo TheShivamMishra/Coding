@@ -497,7 +497,7 @@ void DijkstraAlgo(int src)
 
 // prims Algo : it's same as dijkstras to find MST in a grpah in a ordered with src
 struct Pcomp
-{                 // this - o is replaced by '>' because the pq is default min
+{ // this - o is replaced by '>' because the pq is default min
 public:
     bool operator()(dpair &a, dpair &b)
     {
