@@ -1,11 +1,10 @@
 #include <iostream>
 #include <vector>
-#include <algorithm>
 #include <unordered_map>
 #include <unordered_set>
+#include <algorithm>
 #include <queue>
 #define lli long long int
-
 using namespace std;
 
 //leetcode 130=======================================================================
@@ -126,24 +125,23 @@ int dfs_numIsLandArea(int r, int c, int n, int m, vector<vector<int>> &board)
     return count + 1;
 }
 
-int maxAreaOfIsland(vector<vector<int>> &board)
+int maxAreaOfIsland(vector<vector<int>> &grid)
 {
 
-    if (board.size() == 0)
+    if (grid.size() == 0)
         return 0;
 
-    int n = board.size();
-    int m = board[0].size();
+    int n = grid.size();
+    int m = grid[0].size();
     int area = 0;
 
     for (int i = 0; i < n; i++)
     {
         for (int j = 0; j < m; j++)
         {
-            if (board[i][j] == 1)
+            if (grid[i][j] == 1)
             {
-
-                area = max(area, dfs_numIsLandArea(i, j, n, m, board));
+                area = max(area, dfs_numIsLandArea(i, j, n, m, grid));
             }
         }
     }
@@ -152,24 +150,24 @@ int maxAreaOfIsland(vector<vector<int>> &board)
 
 //leetcode 463======================================================
 
-int islandPerimeter(vector<vector<int>> &board)
+int islandPerimeter(vector<vector<int>> &grid)
 {
     int totalOnes = 0;
     int commonRegion = 0;
 
-    int n = board.size();
-    int m = board[0].size();
+    int n = grid.size();
+    int m = grid[0].size();
 
     for (int i = 0; i < n; i++)
     {
         for (int j = 0; j < m; j++)
         {
-            if (board[i][j] == 1)
+            if (grid[i][j] == 1)
             {
                 totalOnes++;
-                if (j + 1 < m && board[i][j + 1] == 1)
+                if (j + 1 < m && grid[i][j + 1] == 1)
                     commonRegion++;
-                if (i + 1 < n && board[i + 1][j] == 1)
+                if (i + 1 < n && grid[i + 1][j] == 1)
                     commonRegion++;
             }
         }
@@ -280,7 +278,7 @@ void wallsAndGates(vector<vector<int>> &grid)
 int orangesRotting(vector<vector<int>> &grid)
 {
     if (grid.size() == 0 || grid[0].size() == 0)
-        return 0;
+        return;
 
     int n = grid.size();
     int m = grid[0].size();
@@ -325,62 +323,7 @@ int orangesRotting(vector<vector<int>> &grid)
             if (grid[i][j] == 1)
                 return -1;
 
-    return level - 1;
-}
-
-//785=============================================================================
-
-bool isBipartite_(int src, vector<int> &vis, vector<vector<int>> &graph)
-{
-    queue<pair<int, int>> que;
-    que.push({src, 0});
-
-    while (que.size() != 0)
-    {
-        int size = que.size();
-        while (size-- > 0)
-        {
-
-            pair<int, int> rvtx = que.front();
-            que.pop();
-
-            if (vis[rvtx.first] != -1)
-            {
-                if (vis[rvtx.first] != rvtx.second)
-                    return false;
-            }
-
-            vis[rvtx.first] = rvtx.second;
-
-            for (int e : graph[rvtx.first])
-            {
-                if (vis[e] == -1)
-                {
-                    que.push({e, (rvtx.second + 1) % 2});
-                }
-            }
-        }
-    }
-
-    return true;
-}
-
-bool isBipartite(vector<vector<int>> &graph)
-{
-
-    int n = graph.size();
-    if (n == 0)
-        return true;
-    int m = graph[0].size();
-    if (m == 0)
-        return true;
-    vector<int> vis(n, -1);
-
-    bool res = false;
-    for (int i = 0; i < n; i++)
-        if (vis[i] == -1)
-            res = isBipartite_(i, vis, graph);
-    return res;
+    return level;
 }
 
 //leetcode 207============================================
@@ -443,7 +386,9 @@ vector<int> findOrder(int numCourses, vector<vector<int>> &prerequisites)
 
     vector<int> ans = kahnsAlgo(numCourses, graph, prerequisites);
 
-    return ans.size() != numCourses ? vector<int>{} : ans;
+    if (ans.size() == numCourses)
+        return ans;
+    return {};
 }
 
 //leetcode 329==========================================================
@@ -565,96 +510,8 @@ int numBusesToDestination(vector<vector<int>> &routes, int S, int T)
     return -1;
 }
 
-// vector<int> par;
-// vector<int> setSize;
-
-// int findPar(int vtx)
-// {
-//     if (par[vtx] == vtx)
-//         return vtx;
-//     return par[vtx] = findPar(par[vtx]);
-// }
-
-// void mergeSet(int p1, int p2)
-// {
-//     if (setSize[p1] < setSize[p2])
-//     {
-//         par[p1] = p2;
-//         setSize[p2] += setSize[p1];
-//     }
-//     else
-//     {
-//         par[p2] = p1;
-//         setSize[p1] += setSize[p2];
-//     }
-// }
-
-// //leetcode 684.=====================================================
-
-// vector<int> findRedundantConnection(vector<vector<int>> &edges)
-// {
-//     for (int i = 0; i <= edges.size(); i++)
-//     {
-//         par.push_back(i);
-//         setSize.push_back(1);
-//     }
-
-//     for (vector<int> ar : edges)
-//     {
-//         int u = ar[0];
-//         int v = ar[1];
-//         int p1 = findPar(u);
-//         int p2 = findPar(v);
-
-//         if (p1 != p2)
-//         {
-//             mergeSet(p1, p2);
-//         }
-//         else
-//         {
-//             return ar;
-//         }
-//     }
-
-//     return {};
-// }
-
-// //leetcode : 547 ===================================================
-
-// int findCircleNum(vector<vector<int>> &arr)
-// {
-
-//     int n = arr.size();
-//     //declare se;f as parent.
-//     for (int i = 0; i < n; i++)
-//     {
-//         par.push_back(i);
-//         setSize.push_back(1);
-//     }
-//     int count = n;
-//     for (int i = 0; i < n; i++)
-//     {
-//         for (int j = 0; j < n; j++)
-//         {
-//             if (arr[i][j] != 0 && i != j) // if direct friendship.
-//             {
-//                 int p1 = findPar(i);
-//                 int p2 = findPar(j);
-//                 if (p1 != p2)
-//                 {
-//                     count--;
-//                     mergeSet(p1, p2);
-//                 }
-//             }
-//         }
-//     }
-
-//     return count;
-// }
-
-//leetcode 1061.=================================================
-vector<int> par; //making parent of every letter to itself;
-// vector<int> setSize(26, 1); // making the size of each set 1;
+vector<int> par;
+vector<int> setSize;
 
 int findPar(int vtx)
 {
@@ -663,32 +520,99 @@ int findPar(int vtx)
     return par[vtx] = findPar(par[vtx]);
 }
 
-void smallestEquivalentString(string A, string B, string S)
+void mergeSet(int p1, int p2)
+{
+    if (setSize[p1] < setSize[p2])
+    {
+        par[p1] = p2;
+        setSize[p2] += setSize[p1];
+    }
+    else
+    {
+        par[p2] = p1;
+        setSize[p1] += setSize[p2];
+    }
+}
+
+//leetcode 684.=====================================================
+
+vector<int> findRedundantConnection(vector<vector<int>> &edges)
+{
+    for (int i = 0; i <= edges.size(); i++)
+    {
+        par.push_back(i);
+        setSize.push_back(1);
+    }
+
+    for (vector<int> &ar : edges)
+    {
+        int u = ar[0];
+        int v = ar[1];
+        int p1 = findPar(u);
+        int p2 = findPar(v);
+
+        if (p1 != p2)
+            mergeSet(p1, p2);
+        else
+            return ar;
+    }
+
+    return {};
+}
+
+//leetcode : 547 ===================================================
+
+int findCircleNum(vector<vector<int>> &arr)
 {
 
-    int size = A.size();
+    int n = arr.size();
+    //declare se;f as parent.
+    for (int i = 0; i < n; i++)
+    {
+        par.push_back(i);
+        setSize.push_back(1);
+    }
+    int count = n;
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = 0; j < n; j++)
+        {
+            if (arr[i][j] != 0 && i != j) // if direct friendship.
+            {
+                int p1 = findPar(i);
+                int p2 = findPar(j);
+                if (p1 != p2)
+                {
+                    count--;
+                    mergeSet(p1, p2);
+                }
+            }
+        }
+    }
+
+    return count;
+}
+
+//leetcode 1061.=================================================
+
+string smallestEquivalentString(string A, string B, string S)
+{
+
     for (int i = 0; i < 26; i++)
         par.push_back(i);
-
-    for (int i = 0; i < size; i++)
+    for (int i = 0; i < A.length(); i++)
     {
         int p1 = findPar(A[i] - 'a');
         int p2 = findPar(B[i] - 'a');
-        // if(p1!=p2)
-        // {
-        //     mergeSet(p1, p2);
-        // }
-        par[p1] = min(p1, p2); // we can merge it or set using min;
+        par[p1] = min(p1, p2);
         par[p2] = min(p1, p2);
     }
 
-    string res = "";
-    for (int i = 0; i < S.size(); i++)
-    {
-        res += (char)(findPar(S[i] - 'a') + 'a');
-    }
+    string ans = "";
+    for (int i = 0; i < S.length(); i++)
+        ans += (char)(findPar(S[i] - 'a') + 'a');
 
-    cout << res << endl;
+    return ans;
 }
 
 //leetcode 200.=================================================
@@ -778,6 +702,37 @@ int numSimilarGroups(vector<string> &A)
         }
     }
     return groups;
+}
+
+// leetcode 1168.===================================================
+
+int minCostToSupplyWater(int n, vector<int> &wells, vector<vector<int>> &pipes)
+{
+    for (int i = 0; i < wells.size(); i++)
+    {
+        pipes.push_back({0, (i + 1), wells[i]});
+        par.push_back(i);
+    }
+    par.push_back(wells.size());
+
+    sort(pipes.begin(), pipes.end(), [](vector<int> &a, vector<int> &b) {
+        return a[2] < b[2];
+    });
+
+    int cost = 0;
+    for (vector<int> &p : pipes)
+    {
+        int p1 = findPar(p[0]);
+        int p2 = findPar(p[1]);
+
+        if (p1 != p2)
+        {
+            cost += p[2];
+            par[p1] = p2;
+        }
+    }
+
+    return cost;
 }
 
 //Hacker earth: https://www.hackerearth.com/practice/algorithms/graphs/minimum-spanning-tree/practice-problems/algorithm/mr-president/
@@ -924,18 +879,89 @@ lli JourneyToMoon_UnionFind()
 
 //question link: https://leetcode.com/problems/minimize-malware-spread/discuss/614031/C++-:-Union-Find-(pepcoding.com)-reframe-the-question-on-"CORONA"-with-relatable-explanation
 
-void solve()
-{
+//leetcode: 743.======================================================================
 
-    // vector<vector<int>> graph = {{1, 2, 3}, {0, 3, 4}, {0, 3}, {0, 1, 2}, {1}};
-    // for(int e : graph[0])
-    //     cout << e << " ";
-    // cout << isBipartite(graph) << endl;
-    smallestEquivalentString("leetcode", "programs", "sourcecode");
+int networkDelayTime(vector<vector<int>> &times, int N, int K)
+{
+    vector<vector<pair<int, int>>> graph(N + 1); // ArrayList<int[]>[] =new ArrayList[N];
+    for (vector<int> &ar : times)
+        graph[ar[0]].push_back({ar[1], ar[2]});
+
+    vector<int> dis(N + 1, -1);
+    priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> pq;
+    pq.push({0, K}); // weight, vertex
+
+    while (pq.size() != 0)
+    {
+        pair<int, int> rvtx = pq.top();
+        pq.pop();
+        if (dis[rvtx.second] != -1)
+            continue;
+
+        dis[rvtx.second] = rvtx.first;
+        for (pair<int, int> &e : graph[rvtx.second])
+        {
+            if (dis[e.first] == -1)
+                pq.push({rvtx.first + e.second, e.first});
+        }
+    }
+
+    int ans = 0;
+    for (int i = 1; i <= N; i++)
+        if (dis[i] == -1)
+            return -1;
+        else
+            ans = max(ans, dis[i]);
+
+    return ans;
 }
 
-int main(int argc, char const *argv[])
+//Leetcode 787===============================================================
+
+int findCheapestPrice(int n, vector<vector<int>> &flights, int src, int dst, int K)
 {
-    solve();
-    return 0;
+    vector<vector<pair<int, int>>> graph(n + 1); // ArrayList<int[]>[] =new ArrayList[N];
+    for (vector<int> &ar : flights)
+        graph[ar[0]].push_back({ar[1], ar[2]});
+
+    priority_queue<vector<int>, vector<vector<int>>, greater<vector<int>>> pq;
+    pq.push({0, src, K + 1});
+    //PriorityQueue<int[]> pq =new PriorityQueue((int[] a,int[] b)->{
+    //         return a[0]-b[0]; //  this - other for default behaviour.
+    // });
+    // pq.add(new int[]{0,src,K+1});
+
+    while (pq.size() != 0)
+    {
+        vector<int> rvtx = pq.top();
+        pq.pop();
+
+        if (rvtx[1] == dst)
+            return rvtx[0];
+        if (rvtx[2] == 0)
+            continue;
+
+        for (pair<int, int> &e : graph[rvtx[1]])
+            pq.push({rvtx[0] + e.second, e.first, rvtx[2] - 1});
+    }
+
+    return -1;
+}
+
+int findCheapestPrice(int n, vector<vector<int>> &flights, int src, int dst, int K)
+{
+    int INF = 1e8;
+    K++;
+    vector<vector<int>> dp(n, vector<int>(K + 1, INF));
+    dp[src][0] = 0;
+    for (int k = 1; k <= K; k++)
+    {
+        for (int i = 0; i < n; i++)
+            dp[i][k] = dp[i][k - 1];
+
+        for (vector<int> &e : flights)
+            dp[e[1]][k] = min(dp[e[1]][k], dp[e[0]][k - 1] + e[2]); // dp[v][k]=min(dp[v][k],dp[u][k-1]+w);
+    }
+
+    return dp[dst][K] == INF ? -1 : dp[dst][K];
 }
