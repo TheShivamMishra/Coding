@@ -538,6 +538,105 @@ void PrimsAlgo(int src)
     display(PrimsGraph);
 }
 
+// void bellmanFord(vector<vector<int>> &graph_, int src)
+// {
+//     int INF = 1e8;
+//     vector<vector<int>> dp(graph_.size(), vector<int>(graph_.size() + 1), INF);
+//     dp[src][0] = 0;
+//     bool isNegativeCycle = false;
+
+//     for (int i = 1; i <= graph_.size(); i++)
+//     {
+//         for (int j = 0; j < graph_.size(); j++)
+//             dp[j][i] = dp[j][i - 1];
+
+//         for (vector<int> &e : graph_)
+//         {
+//             int u = e[0], v = e[1], w = e[2];
+//             if (dp[u][i - 1] == INF)
+//                 continue;
+//             int temp = dp[v][i];
+//             dp[v][i] = min(dp[v][i], dp[u][i - 1] + w);
+
+//             if (i == graph_.size() && dp[v][i] != temp)
+//                 isNegativeCycle = true;
+//         }
+//     }
+// }
+
+// void bellmanFord_1D(vector<vector<int>> &graph_, int src)
+// {
+//     int INF = 1e8;
+//     int n = graph_.size();
+//     vector<int> dp(n, INF);
+//     dp[src] = 0;
+//     bool isNegativeCycle = false;
+
+//     for (int i = 1; i <= n; i++)
+//     {
+//         for (vector<int> &e : graph_)
+//         {
+//             int u = e[0], v = e[1], w = e[2];
+//             if (dp[u] == INF)
+//                 continue;
+//             int temp = dp[v];
+//             dp[v] = min(dp[v], dp[u] + w);
+//             if (i == graph_.size() && dp[v] != temp)
+//                 isNegativeCycle = true;
+//         }
+//     }
+// }
+
+//AP.===========================================================
+
+vector<int> dis(N, 0);
+vector<int> low(N, 0);
+vector<int> AP(N, 0);
+vector<bool> vis(N, 0);
+
+int countTime = 0;
+int rootCalls = 0;
+
+void dfs_AP(int src, int par)
+{
+    dis[src] = low[src] = countTime++;
+    vis[src] = true;
+    for (Edge e : graph[src])
+    {
+        int child = e.v;
+        if (!vis[child])
+        {
+            if (par == -1)
+                rootCalls++;
+
+            dfs_AP(child, src);
+            if (dis[src] <= low[child]) //Articulation Point.
+                AP[src]++;
+            if (dis[src] < low[child]) //Articulation Edge.
+                cout << "AP Bridge: " << src << " to " << child << endl;
+
+            low[src] = min(low[src], low[child]);
+        }
+        else if (child != par)
+            low[src] = min(low[src], dis[child]);
+    }
+}
+
+void APointandBridges()
+{
+    int src = 0;
+    dfs_AP(src, -1);
+
+    if (rootCalls == 1)
+        AP[src]--;
+    for (int i = 0; i < N; i++)
+    {
+        if (AP[i])
+            cout << "AP: " << i << " @ " << AP[i] << endl;
+    }
+}
+
+
 void set1()
 {
     // removeEdge(3, 4);
