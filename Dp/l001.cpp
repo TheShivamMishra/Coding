@@ -1030,9 +1030,9 @@ void stringSubstringSet()
 int coinChangePermutation(int tar, vi &arr, vi &dp)
 {
     if (tar == 0)
-        dp[tar] = 1;
+        return dp[tar] = 1;
     if (dp[tar] != 0)
-        dp[tar];
+        return  dp[tar];
     int count = 0;
     for (auto ele : arr)
         if (tar - ele >= 0)
