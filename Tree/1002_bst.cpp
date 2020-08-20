@@ -172,6 +172,51 @@ void allNodesInRange_02(Node *node, int a, int b, vector<int> &ans)
         allNodesInRange_02(node->right, a, b, ans);
     }
 }
+
+void predAndSucc_InOrder(Node *node, int data)
+{
+    Node *curr = node;
+    Node *pred = nullptr;
+    Node *succ = nullptr;
+    while (curr != nullptr)
+    {
+        if (curr->data == data)
+        {
+            if (curr->left == nullptr)
+                cout << "Pred: " << (pred != nullptr ? pred->data : -1) << endl;
+            else
+            {
+                pred = curr->left;
+                while (pred->right != nullptr)
+                    pred = pred->right;
+                cout << "Pred: " << pred->data << endl;
+            }
+
+            if (curr->right == nullptr)
+                cout << "Succ: " << (succ != nullptr ? succ->data : -1) << endl;
+            else
+            {
+                succ = curr->right;
+                while (succ->left != nullptr)
+                    succ = succ->left;
+                cout << "Succ: " << succ->data << endl;
+            }
+
+            break;
+        }
+        else if (data < curr->data)
+        {
+            succ = curr;
+            curr = curr->left;
+        }
+        else
+        {
+            pred = curr;
+            curr = curr->right;
+        }
+    }
+}
+
 int idx = 0;
 Node *constructTreeFromPreOrder(vector<int> &preOrder, int lb, int rb)
 {

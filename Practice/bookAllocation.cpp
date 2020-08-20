@@ -1,6 +1,7 @@
 #include <bits/stdc++.h>
 #define ll long long int 
 using namespace std;
+
 bool findsol(int a[],int n,int m ,ll ans)
 {
     
@@ -21,9 +22,9 @@ bool findsol(int a[],int n,int m ,ll ans)
      if(j>=m)return false;
     }
 // at last all check and student equal to  m;
-    return true;
-   
+    return true;  
 }
+
 // finding ans with binary search
 ll binarysearch(int a[],int n,int m,ll end ,ll start)
 {
@@ -45,6 +46,7 @@ ll binarysearch(int a[],int n,int m,ll end ,ll start)
     }
     return ans;
 }
+
 int main() {
     //code
     int t;
