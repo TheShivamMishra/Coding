@@ -40,7 +40,7 @@ void UpdateHeightAndBalance(Node *node) // O(1)
 }
 
 //ll rotation.
-Node *ll(Node *A) // O(1)
+Node* ll(Node *A) // O(1)
 {
     Node *B = A->left;
     Node *BkaRight = B->right;
@@ -55,7 +55,7 @@ Node *ll(Node *A) // O(1)
 }
 
 //rr rotation.
-Node *rr(Node *A) // O(1)65
+Node* rr(Node *A) // O(1)65
 {
     Node *B = A->right;
     Node *Bkaleft = B->left;
