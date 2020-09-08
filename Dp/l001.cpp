@@ -1032,7 +1032,7 @@ int coinChangePermutation(int tar, vi &arr, vi &dp)
     if (tar == 0)
         return dp[tar] = 1;
     if (dp[tar] != 0)
-        return  dp[tar];
+        return dp[tar];
     int count = 0;
     for (auto ele : arr)
         if (tar - ele >= 0)
@@ -1624,12 +1624,11 @@ int MCM(vi &arr, int si, int ei, vvi &dp)
             ans = myAns;
     }
 
-    dp[si][ei] = ans;
+    return dp[si][ei] = ans;
 }
 
 int MCM_DP_Ans(vector<int> &arr)
 {
-
     int n = arr.size();
     vector<vector<string>> sdp(n, vector<string>(n, ""));
     vector<vector<int>> dp(n, vector<int>(n, -1));
@@ -1741,7 +1740,7 @@ int burstBallon(vector<int> &arr, int si, int ei, vector<vector<int>> &dp)
         if (myCost > ans)
             ans = myCost;
     }
-    
+
     return dp[si][ei] = ans;
 }
 
