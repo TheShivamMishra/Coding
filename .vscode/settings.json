@@ -7,5 +7,6 @@
         "string": "cpp",
         "*.tcc": "cpp",
         "unordered_map": "cpp"
-    }
+    },
+    "C_Cpp.errorSquiggles": "Disabled"
 }

@@ -530,7 +530,7 @@ public:
 
         if (x < minSF)
         {
-            st.push(2 * x - minSF);
+            st.push(2 * x - minSF);  //encoding;
             minSF = x;
         }
         else
@@ -539,7 +539,7 @@ public:
 
     void pop()
     {
-        if (st.top() < minSF)
+        if (st.top() < minSF)                //decoding;
             minSF = 2 * minSF - st.top();
         st.pop();
     }

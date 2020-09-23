@@ -277,7 +277,6 @@ Node* removeDataBst(Node* root, int data)
             return root->left != nullptr ? root->left : root->right;
         else
         {
-
             int maxInLeft = maximumEle(root->left);
             root->data = maxInLeft;
             root->left =  removeDataBst(root->left, maxInLeft);
